@@ -1,0 +1,26 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: Montserrat;
+  src: url('../fonts/Montserrat_var.ttf');
+}
+
+@font-face {
+  font-family: MontserratItl;
+  src: url('../fonts/Montserrat-Italic.ttf');
+}
+
+body {
+  box-sizing: border-box;
+  margin: 0;
+  font-family: Montserrat, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
+    monospace;
+}
