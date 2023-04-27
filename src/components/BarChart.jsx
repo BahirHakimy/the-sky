@@ -27,27 +27,47 @@ export const options = {
   },
 };
 
-const labels = ['January', 'February', 'March', 'April', 'May', 'June', 'July'];
+function BarChart({ color = '#000', list }) {
+  const data = {
+    labels: list.map(
+      (item) =>
+        `${new Date(item.dt * 1000).toUTCString().split(' ')[0]} ${
+          item.dt_txt.split(' ')[1]
+        }`
+    ),
+    datasets: [
+      {
+        label: 'Minº',
+        data: list.map((item) => item.main.temp_min),
+        backgroundColor: 'rgba(255, 235, 59, 0.8)',
+      },
+      {
+        label: 'Averageº',
+        data: list.map((item) => item.main.feels_like),
+        backgroundColor: 'rgba(53, 162, 235, 0.8)',
+      },
+      {
+        label: 'Maxº',
+        data: list.map((item) => item.main.temp_max),
+        backgroundColor: 'rgba(255, 99, 132, 0.8)',
+      },
+    ],
+  };
 
-const data = {
-  labels,
-  datasets: [
-    {
-      label: 'Min Temp',
-      data: labels.map(() => Math.floor(Math.random() * 100)),
-      backgroundColor: 'rgba(255, 99, 132, 0.8)',
-    },
-    {
-      label: 'Max Temp',
-      data: labels.map(() => Math.floor(Math.random() * 100)),
-      backgroundColor: 'rgba(53, 162, 235, 0.8)',
-    },
-  ],
-};
-
-function BarChart(props) {
-  ChartJS.defaults.color = '#fff';
-  return <Bar className="backdrop-blur-md" options={options} data={data} />;
+  ChartJS.defaults.color = color;
+  return (
+    <div className="backdrop-blur-md py-4 overflow-hidden bg-[#2224] flex flex-col justify-center items-center">
+      <h1 className="p-2" style={{ color: color }}>
+        Next 24 Hours
+      </h1>
+      <Bar
+        className="max-h-[55vh] lg:max-w-[80%]"
+        options={options}
+        data={data}
+      />
+      ;
+    </div>
+  );
 }
 
 export default BarChart;

@@ -5,12 +5,13 @@ import { getAllCities, getForecast } from 'redux/features/weather/weatherSlice';
 import { ImSpinner3 } from 'react-icons/im';
 import CardMini from './CardMini';
 import CardMain from './CardMain';
+import Search from './Search';
 
 function Home() {
   const dispatch = useDispatch();
   const {
     location: {
-      location: { city },
+      location: { lat, lan: lon },
     },
     weather,
     isLoading,
@@ -23,20 +24,21 @@ function Home() {
   }, []);
 
   useEffect(() => {
-    if (!city) return;
-    dispatch(getForecast(city));
-  }, [city]);
+    if (!lat || !lon) return;
+    dispatch(getForecast({ lat, lon }));
+  }, [lat, lon]);
 
   return (
-    <div className="grid grid-cols-2 h-screen max-h-screen overflow-auto bg-cover bg-[url('assets/bg.jpg')]">
+    <div className="relative pt-12 grid grid-cols-2 h-screen max-h-screen overflow-auto bg-cover bg-[url('assets/bg.jpg')]">
+      <Search />
       {isLoading && (
         <ImSpinner3 className="text-white animate-spin" size={25} />
       )}
 
       {weather.forecast.list?.length > 0 && (
         <CardMain
-          name={weather.forecast.city?.name}
           data={weather.forecast.list[0]}
+          city={weather.forecast.city}
         />
       )}
       {weather.citiesWeather.map((city) => {

@@ -10,17 +10,17 @@ const initialState = {
   },
   cities: [
     'washington',
-    // 'london',
-    // 'berlin',
-    // 'paris',
-    // 'beijing',
-    // 'moscow',
-    // 'zurich',
-    // 'dubai',
-    // 'delhi',
-    // 'kabul',
-    // 'dushanbe',
-    // 'tehran',
+    'london',
+    'berlin',
+    'paris',
+    'beijing',
+    'moscow',
+    'zurich',
+    'dubai',
+    'delhi',
+    'kabul',
+    'dushanbe',
+    'tehran',
   ],
 };
 
@@ -44,10 +44,10 @@ export const getAllCities = createAsyncThunk(
 
 export const getForecast = createAsyncThunk(
   'weather/getForecast',
-  async (city) => {
+  async ({ lat, lon }) => {
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`
       );
       return await response.json();
     } catch (error) {}

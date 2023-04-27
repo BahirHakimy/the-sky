@@ -1,29 +1,27 @@
 import React, { useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import { CiLocationOn } from 'react-icons/ci';
 import { TbWind } from 'react-icons/tb';
 import { WiBarometer, WiHumidity } from 'react-icons/wi';
-import { MdOutlineVisibility } from 'react-icons/md';
+import { MdChevronLeft, MdOutlineVisibility } from 'react-icons/md';
 import { useDispatch, useSelector } from 'react-redux';
 import { getForecast } from 'redux/features/weather/weatherSlice';
 import { ImSpinner3 } from 'react-icons/im';
 import BarChart from './BarChart';
 
 function Details() {
-  const { city } = useParams();
+  const { lat, lon } = useParams();
   const dispatch = useDispatch();
   const {
     isLoading,
-    forecast: {
-      city: { name },
-      list: [data],
-    },
+    citiesWeather,
+    forecast: { city, list },
   } = useSelector((store) => store.weather);
 
   useEffect(() => {
-    if (!city) return;
-    dispatch(getForecast(city));
-  }, [city]);
+    if (!lat || !lon) return;
+    dispatch(getForecast({ lat, lon }));
+  }, [lat, lon]);
 
   function getBackground(weather) {
     switch (weather) {
@@ -44,6 +42,9 @@ function Details() {
     }
   }
 
+  const data =
+    citiesWeather.filter((ct) => ct.name === city.name)[0] || list[0];
+
   if (isLoading || !data)
     return (
       <div className="flex justify-center items-center h-screen">
@@ -53,18 +54,25 @@ function Details() {
 
   return (
     <div
-      className={`bg-cover bg-no-repeat max-h-screen overflow-auto ${getBackground(
-        // data.weather[0].main
-        'Rain'
+      className={`relative bg-cover bg-no-repeat max-h-screen overflow-auto ${getBackground(
+        data.weather[0].main
       )} w-full h-screen m-0`}
     >
+      <Link
+        to="/"
+        className="absolute top-2 left-2 flex items-center text-sm font-semibold"
+      >
+        <MdChevronLeft size={20} /> Back
+      </Link>
       <div
         className={`max-w-full flex flex-col col-span-2 items-center p-2 md:p-4 m-2 rounded-md ${
-          data.weather[0].main === 'Drizzle' && 'bg-[#2226]'
+          !['Clear', 'Rain', 'Thunderstorm', 'Snow', 'Clouds'].includes(
+            data.weather[0].main
+          ) && 'bg-[#2226]'
         }`}
       >
         <h2 className="text-3xl flex items-center">
-          {name} <CiLocationOn size={25} />
+          {city.name} <CiLocationOn size={25} />
         </h2>
         <img
           src={`https://openweathermap.org/img/w/${data?.weather[0].icon}.png`}
@@ -93,8 +101,14 @@ function Details() {
             <MdOutlineVisibility size={25} className="mx-2" /> {data.visibility}
           </li>
         </ul>
+        <Link
+          to={`/forecast/${lat}/${lon}`}
+          className="bg-[#2226] text-white px-2 py-1 mt-1 rounded-full"
+        >
+          See Full Forecast
+        </Link>
       </div>
-      <BarChart />
+      <BarChart color="#fff" list={list.slice(0, 8)} />
     </div>
   );
 }

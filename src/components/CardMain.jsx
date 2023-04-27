@@ -5,14 +5,14 @@ import { WiBarometer, WiHumidity } from 'react-icons/wi';
 import { MdOutlineVisibility } from 'react-icons/md';
 import { Link } from 'react-router-dom';
 
-function CardMain({ name, data }) {
+function CardMain({ city, data }) {
   return (
     <Link
-      to={`details/${name}`}
+      to={`details/${city.coord.lat}/${city.coord.lon}`}
       className="max-w-full flex flex-col col-span-2 items-center backdrop-blur bg-[#2228] p-2 md:p-4 m-2 rounded-md"
     >
       <h2 className="text-3xl text-white flex items-center">
-        {name} <CiLocationOn size={25} />
+        {city.name} <CiLocationOn size={25} />
       </h2>
       <img
         src={`https://openweathermap.org/img/w/${data.weather[0].icon}.png`}

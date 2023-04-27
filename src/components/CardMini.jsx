@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 function CardMini({ data }) {
   return (
     <Link
-      to={`details/${data.name}`}
+      to={`details/${data.coord.lat}/${data.coord.lon}`}
       className="flex flex-col items-center backdrop-blur bg-[#2228] p-4 m-2 rounded-md max-h-72"
     >
       <h2 className="md:text-2xl text-xl text-white flex items-center">
