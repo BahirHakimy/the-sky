@@ -19,9 +19,9 @@ export const getLocation = createAsyncThunk(
       const response = await fetch('https://ipapi.co/json/');
       return await response.json();
     } catch (error) {
-      rejectWithValue(error);
+      return rejectWithValue(error);
     }
-  }
+  },
 );
 
 const locationSlice = createSlice({
@@ -37,14 +37,22 @@ const locationSlice = createSlice({
       getLocation.fulfilled,
       (
         state,
-        { payload: { ip, country, city, latitude: lat, longitude: lan } }
-      ) => {
-        return {
-          ...state,
-          isLoading: false,
-          location: { ip, country, city, lat, lan },
-        };
-      }
+        {
+          payload: {
+            ip, country, city, latitude: lat, longitude: lan,
+          },
+        },
+      ) => ({
+        ...state,
+        isLoading: false,
+        location: {
+          ip,
+          country,
+          city,
+          lat,
+          lan,
+        },
+      }),
     );
     builder.addCase(getLocation.rejected, (state) => ({
       ...state,

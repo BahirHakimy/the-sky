@@ -23,7 +23,8 @@
     "react/react-in-jsx-scope": "off",
     "import/no-unresolved": "off",
     "no-shadow": "off",
-    "react/prop-types": "off"
+    "react/prop-types": "off",
+    "jsx-a11y/label-has-associated-control": "off"
   },
-  "ignorePatterns": ["dist/", "build/", "src/"]
+  "ignorePatterns": ["dist/", "build/"]
 }

@@ -1,4 +1,3 @@
-import React, { useEffect } from 'react';
 import { Link, Navigate, useParams } from 'react-router-dom';
 import { CiCalendar, CiClock1, CiLocationOn } from 'react-icons/ci';
 import { TbWind } from 'react-icons/tb';
@@ -7,7 +6,7 @@ import { MdChevronLeft, MdOutlineVisibility } from 'react-icons/md';
 import { useSelector } from 'react-redux';
 import { ImSpinner3 } from 'react-icons/im';
 
-function FullForcast(props) {
+function FullForcast() {
   const { lat, lon } = useParams();
   const {
     isLoading,
@@ -39,12 +38,13 @@ function FullForcast(props) {
 
   const data = citiesWeather.filter((ct) => ct.name === name)[0] || list[0];
 
-  if (isLoading)
+  if (isLoading) {
     return (
       <div className="flex justify-center items-center h-screen">
         <ImSpinner3 className="text-black animate-spin" size={35} />
       </div>
     );
+  }
 
   if (!isLoading && !data) return <Navigate to={`/details/${lat}/${lon}`} />;
 
@@ -52,32 +52,36 @@ function FullForcast(props) {
     const date = new Date(curr.dt * 1000).toDateString();
     if (accu[date]) {
       return { ...accu, [date]: [...accu[date], curr] };
-    } else {
-      return { ...accu, [date]: [curr] };
     }
+    return { ...accu, [date]: [curr] };
   }, {});
 
   return (
     <div
       className={`relative bg-cover bg-no-repeat max-h-screen overflow-auto ${getBackground(
-        data.weather[0].main
+        data.weather[0].main,
       )} w-full h-screen m-0`}
     >
       <Link
         to={`/details/${lat}/${lon}`}
         className="absolute top-2 left-2 flex items-center text-sm font-semibold"
       >
-        <MdChevronLeft size={20} /> Back
+        <MdChevronLeft size={20} />
+        {' '}
+        Back
       </Link>
       <div
         className={`max-w-full flex flex-col col-span-2 items-center p-2 md:p-4 m-2 rounded-md ${
           !['Clear', 'Rain', 'Thunderstorm', 'Snow', 'Clouds'].includes(
-            data.weather[0].main
+            data.weather[0].main,
           ) && 'bg-[#2226]'
         }`}
       >
         <h2 className="text-3xl flex items-center">
-          {name} Now <CiLocationOn size={25} />
+          {name}
+          {' '}
+          Now
+          <CiLocationOn size={25} />
         </h2>
         <img
           src={`https://openweathermap.org/img/w/${data?.weather[0].icon}.png`}
@@ -86,19 +90,34 @@ function FullForcast(props) {
         <h2 className="text-3xl my-2 capitalize">
           {data.weather[0].description}
         </h2>
-        <h2 className="text-3xl my-2">{data.main.temp}º</h2>
+        <h2 className="text-3xl my-2">
+          {data.main.temp}
+          º
+        </h2>
         <ul className="flex">
           <li className="flex flex-col items-center mx-2  text-center">
-            <TbWind size={25} className="mx-2" /> {data.wind.speed} m/s
+            <TbWind size={25} className="mx-2" />
+            {' '}
+            {data.wind.speed}
+            {' '}
+            m/s
           </li>
           <li className="flex flex-col items-center mx-2  text-center">
-            <WiHumidity size={25} className="mx-2" /> {data.main.humidity}
+            <WiHumidity size={25} className="mx-2" />
+            {' '}
+            {data.main.humidity}
           </li>
           <li className="flex flex-col items-center mx-2  text-center">
-            <WiBarometer size={25} className="mx-2" /> {data.main.pressure} hpa
+            <WiBarometer size={25} className="mx-2" />
+            {' '}
+            {data.main.pressure}
+            {' '}
+            hpa
           </li>
           <li className="flex flex-col items-center mx-2  text-center">
-            <MdOutlineVisibility size={25} className="mx-2" /> {data.visibility}
+            <MdOutlineVisibility size={25} className="mx-2" />
+            {' '}
+            {data.visibility}
           </li>
         </ul>
       </div>
@@ -112,7 +131,9 @@ function FullForcast(props) {
             className="flex flex-col items-start w-full text-white bg-[#2227] shadow backdrop-blur-sm mb-2 p-2"
           >
             <h3 className="flex items-center font-bold">
-              <CiCalendar size={18} /> {key}
+              <CiCalendar size={18} />
+              {' '}
+              {key}
             </h3>
             {groupedData[key].map((item) => (
               <div
@@ -120,23 +141,28 @@ function FullForcast(props) {
                 className="w-full flex items-center flex-col border-b pt-2"
               >
                 <h4 className="text-center flex items-center">
-                  <CiClock1 size={18} />{' '}
+                  <CiClock1 size={18} />
+                  {' '}
                   {new Date(item.dt * 1000).toLocaleTimeString()}
                 </h4>
                 <h2 className="text-2xl flex items-center capitalize">
                   <img
                     src={`https://openweathermap.org/img/w/${item?.weather[0].icon}.png`}
                     alt="icon"
-                  />{' '}
+                  />
+                  {' '}
                   {item.weather[0].description}
                 </h2>
                 <h2 className="text-2xl my-2">
                   <span className="text-base font-semibold mx-4">
-                    {item.main.temp_min}º
+                    {item.main.temp_min}
+                    º
                   </span>
-                  {item.main.temp}º
+                  {item.main.temp}
+                  º
                   <span className="text-base font-semibold mx-4">
-                    {item.main.temp_max}º
+                    {item.main.temp_max}
+                    º
                   </span>
                 </h2>
               </div>

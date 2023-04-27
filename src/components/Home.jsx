@@ -12,27 +12,33 @@ function Home() {
   const {
     location: {
       location: { lat, lan: lon },
+      isLoading,
     },
     weather,
-    isLoading,
   } = useSelector((state) => state);
 
   useEffect(() => {
     dispatch(getLocation());
     if (weather.forecast && weather.forecast.list?.length > 0) return;
     dispatch(getAllCities());
-  }, []);
+  }, [dispatch, weather.forecast]);
 
   useEffect(() => {
     if (!lat || !lon) return;
     dispatch(getForecast({ lat, lon }));
-  }, [lat, lon]);
+  }, [dispatch, lat, lon]);
 
   return (
     <div className="relative pt-12 grid grid-cols-2 h-screen max-h-screen overflow-auto bg-cover bg-[url('assets/bg.jpg')]">
       <Search />
-      {isLoading && (
-        <ImSpinner3 className="text-white animate-spin" size={25} />
+      {(isLoading || weather.isLoading) && (
+        <div className="flex justify-center items-center col-span-2">
+          <ImSpinner3
+            data-testid="loading"
+            className="text-slate-900 animate-spin"
+            size={25}
+          />
+        </div>
       )}
 
       {weather.forecast.list?.length > 0 && (
@@ -41,11 +47,9 @@ function Home() {
           city={weather.forecast.city}
         />
       )}
-      {weather.citiesWeather.map((city) => {
-        return city.name === weather.forecast.city?.name ? null : (
-          <CardMini key={city.id} data={city} />
-        );
-      })}
+      {weather.citiesWeather.map((city) => (city.name === weather.forecast.city?.name ? null : (
+        <CardMini key={city.id} data={city} />
+      )))}
     </div>
   );
 }

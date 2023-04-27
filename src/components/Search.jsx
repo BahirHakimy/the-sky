@@ -16,7 +16,7 @@ function Search() {
   React.useEffect(() => {
     if (!query) return;
     dispatch(searchLocation(query));
-  }, [query]);
+  }, [dispatch, query]);
 
   function handleChange(value) {
     if (value === '') {
@@ -30,7 +30,7 @@ function Search() {
       <div className="flex items-center justify-center w-80 pt-2">
         <input
           className="w-auto md:w-max bg-[#2225] text-white rounded-tl-full rounded-bl-full px-3 py-1 placeholder:text-slate-100"
-          placeholder="Search for a city"
+          placeholder="Search for anywhere"
           type="search"
           name="search"
           id="search"
@@ -50,8 +50,8 @@ function Search() {
             <ImSpinner3 className="animate-spin" size={20} />
           </li>
         )}
-        {!isLoading &&
-          results.map((city) => (
+        {!isLoading
+          && results.map((city) => (
             <li
               key={city.lat}
               className="bg-[#2225] rounded text-white p-2 mb-1 w-full"

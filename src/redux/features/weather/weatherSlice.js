@@ -32,14 +32,16 @@ export const getAllCities = createAsyncThunk(
       await Promise.all(
         initialState.cities.map(async (city) => {
           const response = await fetch(
-            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`
+            `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`,
           );
           cities.push(await response.json());
-        })
+        }),
       );
       return cities;
-    } catch (error) {}
-  }
+    } catch (error) {
+      return error;
+    }
+  },
 );
 
 export const getForecast = createAsyncThunk(
@@ -47,11 +49,13 @@ export const getForecast = createAsyncThunk(
   async ({ lat, lon }) => {
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`
+        `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&&lon=${lon}&appid=${process.env.REACT_APP_WEATHER_API_KEY}&units=metric`,
       );
       return await response.json();
-    } catch (error) {}
-  }
+    } catch (error) {
+      return error;
+    }
+  },
 );
 
 const weatherSlice = createSlice({
@@ -63,13 +67,11 @@ const weatherSlice = createSlice({
       ...state,
       isLoading: true,
     }));
-    builder.addCase(getAllCities.fulfilled, (state, { payload }) => {
-      return {
-        ...state,
-        isLoading: false,
-        citiesWeather: [...payload],
-      };
-    });
+    builder.addCase(getAllCities.fulfilled, (state, { payload }) => ({
+      ...state,
+      isLoading: false,
+      citiesWeather: [...payload],
+    }));
     builder.addCase(getAllCities.rejected, (state) => ({
       ...state,
       isLoading: false,

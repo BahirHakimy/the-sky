@@ -12,11 +12,13 @@ export const searchLocation = createAsyncThunk(
   async (city) => {
     try {
       const response = await fetch(
-        `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
+        `http://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${process.env.REACT_APP_WEATHER_API_KEY}`,
       );
       return await response.json();
-    } catch (error) {}
-  }
+    } catch (error) {
+      return error;
+    }
+  },
 );
 
 const searchSlice = createSlice({
@@ -31,19 +33,17 @@ const searchSlice = createSlice({
       ...state,
       isLoading: true,
     }));
-    builder.addCase(searchLocation.fulfilled, (state, { payload }) => {
-      return {
-        ...state,
-        isLoading: false,
-        results: payload.map((city) => ({
-          name: city.name,
-          country: city.country,
-          state: city.state,
-          lat: city.lat,
-          lon: city.lon,
-        })),
-      };
-    });
+    builder.addCase(searchLocation.fulfilled, (state, { payload }) => ({
+      ...state,
+      isLoading: false,
+      results: payload.map((city) => ({
+        name: city.name,
+        country: city.country,
+        state: city.state,
+        lat: city.lat,
+        lon: city.lon,
+      })),
+    }));
     builder.addCase(searchLocation.rejected, (state) => ({
       ...state,
       isLoading: false,

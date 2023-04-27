@@ -15,7 +15,7 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
 );
 
 export const options = {
@@ -30,10 +30,9 @@ export const options = {
 function BarChart({ color = '#000', list }) {
   const data = {
     labels: list.map(
-      (item) =>
-        `${new Date(item.dt * 1000).toUTCString().split(' ')[0]} ${
-          item.dt_txt.split(' ')[1]
-        }`
+      (item) => `${new Date(item.dt * 1000).toUTCString().split(' ')[0]} ${
+        item.dt_txt.split(' ')[1]
+      }`,
     ),
     datasets: [
       {
@@ -57,7 +56,7 @@ function BarChart({ color = '#000', list }) {
   ChartJS.defaults.color = color;
   return (
     <div className="backdrop-blur-md py-4 overflow-hidden bg-[#2224] flex flex-col justify-center items-center">
-      <h1 className="p-2" style={{ color: color }}>
+      <h1 className="p-2" style={{ color }}>
         Next 24 Hours
       </h1>
       <Bar
