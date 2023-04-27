@@ -24,7 +24,7 @@
 
 # 📖 The Sky <a name="about-project"></a>
 
-**The Sky** A simple app built with `React JS` which has a beautiful UI and users can add or remove books from the app.
+**The Sky** A weather forecast app built with `React JS`, It has a cool design/UI and it shows the weather based on user's location, It also has the search functionality for searching for a specific city's weather condition and forecast..
 
 ## 🛠 Built With <a name="built-with"></a>
 
@@ -69,6 +69,10 @@
 
 - Coming Soon...
 
+## Watch the walkthrough here:
+
+- [Loom Walkthrough](https://www.loom.com/share/77484c8ca17742e6a639bd240fc44ab2)
+
 <p align="right"><a href="#readme-top">👆</a></p>
 
 <!-- Getting Started -->
@@ -90,7 +94,7 @@ In order to run this project you need to:
 Clone the repo into your local machine:
 
 ```bash
-git clone https://github.com/BahirHakimy/reactstore.git
+git clone https://github.com/BahirHakimy/the-sky.git
 ```
 
 Install the dependencies using npm:
@@ -135,7 +139,7 @@ npm run build
 
 ## 🔭 Future Features <a name="future-features"></a>
 
-- **Cool Design On The Way** :eyes:
+- **Animations and transitions** :eyes:
 <p align="right"><a href="#readme-top">👆</a></p>
 
 <!-- Contributing -->
