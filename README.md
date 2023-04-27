@@ -67,7 +67,7 @@
 
 ## 🚀 Live Demo <a name="live-demo"></a>
 
-- Coming Soon...
+- [Live](https://the-sky.onrender.com/)
 
 ## Watch the walkthrough here:
 
