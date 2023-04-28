@@ -71,7 +71,7 @@
 
 ## Watch the walkthrough here:
 
-- [Loom Walkthrough](https://www.loom.com/share/77484c8ca17742e6a639bd240fc44ab2)
+- [Loom Walkthrough](https://www.loom.com/share/ea2139b9149b46659a398dfdd58e5888)
 
 <p align="right"><a href="#readme-top">👆</a></p>
 
