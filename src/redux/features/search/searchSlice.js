@@ -12,13 +12,13 @@ export const searchLocation = createAsyncThunk(
   async (city) => {
     try {
       const response = await fetch(
-        `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${process.env.REACT_APP_WEATHER_API_KEY}`
+        `https://api.openweathermap.org/geo/1.0/direct?q=${city}&limit=5&appid=${process.env.REACT_APP_WEATHER_API_KEY}`,
       );
       return await response.json();
     } catch (error) {
       return error;
     }
-  }
+  },
 );
 
 const searchSlice = createSlice({
