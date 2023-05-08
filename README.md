@@ -140,6 +140,7 @@ npm run build
 ## 🔭 Future Features <a name="future-features"></a>
 
 - **Animations and transitions** :eyes:
+- **Design enhancements** :eyes:
 <p align="right"><a href="#readme-top">👆</a></p>
 
 <!-- Contributing -->
